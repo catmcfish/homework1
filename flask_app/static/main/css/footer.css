@@ -1,0 +1,15 @@
+.footer {
+    /* Fixes the footer at the bottom of the page */
+    position: fixed;
+    bottom: 0;
+    /* Makes the footer span the full width of the page */
+    width: 100%;
+    /* Centers the text horizontally */
+    text-align: center;
+    /* Centers the content horizontally */
+    justify-content: center;
+    /* Uses flexbox layout for the footer */
+    display: flex;
+    /* Sets the text color to a shade of gray */
+    color: #555;
+}

@@ -1,0 +1,104 @@
+/* Center text with block display and justified alignment */
+.textCenter {
+    display: block;
+    text-align: center;
+    text-justify: justify;
+    font-size: 1em;
+}
+
+/* Center text and content with flex display and auto margins */
+.textCenterPost {
+    margin: auto;
+    display: flex;
+    text-align: center;
+    text-justify: center;
+    margin-top: 170;
+    position: relative;
+    font-size: 1em;
+}
+
+/* Center image with block display and auto margins, set size and background color */
+.imgCenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30vw;
+    height: 30vh;
+    top: 0;
+    z-index: 1;
+    background-color: #ffffff;
+}
+
+/* Left column with 50% flex and hidden overflow */
+.leftColumn {
+    flex: 50%;
+    overflow: hidden;
+}
+
+/* Right column with 50% flex, auto vertical overflow, and padding */
+.rightColumn {
+    flex: 50%;
+    overflow-y: auto;
+    padding: 2vw;
+}
+
+/* Fun fact section with centered text and padding */
+.funFact {
+    width: 80vw;
+    margin: auto;
+    text-align: center;
+    padding: 2vw;
+}
+
+/* Row with flex display, wrapping, and centered content */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 50vh;
+    max-width: 80vw;
+    margin: auto;
+    margin-top: 5vh;
+}
+
+/* Right column with 50% flex, padding, and auto vertical overflow */
+.rightColumn {
+    flex: 50%;
+    padding: 2vw;
+    overflow: scroll;
+    flex: 1; 
+    overflow-y: auto;
+}
+
+/* Left column with flex 1 and padding */
+.leftColumn {
+    flex: 1;
+    padding: 2vw;
+}
+
+/* Center image with block display, auto margins, and responsive size */
+.imgCenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Media query for screens with max width of 650px */
+@media (max-width: 650px) {
+    /* Columns take full width and visible overflow */
+    .leftColumn, .rightColumn, .column {
+        flex: 100%;
+        max-width: 80vw;
+        overflow: visible;
+    }
+}
+
+/* Media query for screens with max width of 650px */
+@media (max-width: 650px) {
+    /* Row with horizontal direction and fixed width */
+    .row {
+        flex-direction: row;
+        width: 80vw;
+    }
+}
