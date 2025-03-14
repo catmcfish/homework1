@@ -6,29 +6,31 @@ This assignment is graded on a 100 point scale. The following guide will be used
 
 **Specific Requirements:**
 
-* <u>xx /40 points:</u>  Home and Projects page
-  * <u>xx/10 points</u>: all *Structure* requirements were met.
-  * <u>xx/10 points:</u> all *Content* requirements were met.
-  * <u>xx/10 points:</u> all *Style* requirements were met.
-  * <u>xx/10 points:</u> all *Interactivity* requirements were met.
+* <u>xx /30 points:</u>  Database 
+  * <u>xx/10 points</u>: All required database tables were correctly specified in `database/create_tables`; see specific requirement 1.1
+  * <u>xx/5 points:</u>  All required initial data were correctly specified in `database/initial_data`; see specific requirement 1.2
+  * In the database utility; `utils/database/database.py`
+    * <u>xx/5 points:</u> The createTables() function met all requirements; see specific requirement 1.3.1
+    * <u>xx/5 points:</u> The insertRows() function met all requirements; see specific requirement 1.3.2
+    * <u>xx/5 points:</u> The getResumeData() function met all requirements; see specific requirement 1.3.3
+* <u>xx /30 points:</u>  Resume Page
+  * <u>xx/20 points</u>: All requirements of  `resume.html` template were completed; see specific requirement 2.1
+  * <u>xx/10 points:</u> All Stlying requirements were met; see specific requirement 2.2
+* <u>xx /30 points:</u>  Feedback form
+  * <u>xx/15 points</u>: All feedback form requirements were completed; this include the button to toggle the form; see specific requirement 3.1, and 3.2  
+  * <u>xx/15 points:</u> Data from the feedback form was processed, stored, and displayed correctly; see specific requirement 3.3
+  
 
-* <u>xx /40 points:</u>  piano application
-  * <u>xx/10 points</u>: Piano with 10 white keys, 7 black keys, and the name "The Great Old One" was created by layering HTML elements.
-  * <u>xx/5 points:</u> When the mouse hovers over any key of the piano, it temporarily reveal the keyboard keys that control the piano
-  * <u>xx/10 points:</u> The keyboard is playable; when a key is pressed, the corresponding note is played.
-  * <u>xx/5 points:</u> When a key is pressed, the style of the key is updated to reflect that it has been pressed.
-  * <u>xx/10 points:</u> When the sequence of keys "weseeyou" is typed on your piano it awakens the great old one.
-
-
+  
 
 
 **General Requirements:**
 
-* <u>xx/5 points:</u> Does the code adhere to <u>HTML best practices</u> including:
+* <u>xx/2.5 points:</u> Does the code adhere to <u>HTML best practices</u> including:
   
   * Separates Javascript/CSS code from HTML (no inline styling)
   
-  * `<script>` tags always occur at the bottom of the document
+  * `<script>` tags always occur at the bottom of the document or with the `defer` attribute
   
   * `<img>` tags always include `alt` attribute and `loading="lazy"` attribute
   
@@ -48,7 +50,7 @@ This assignment is graded on a 100 point scale. The following guide will be used
   
     
   
-* <u>xx/10 points:</u> Does the code adhere to <u>CSS best practices</u> including:
+* <u>xx/5 points:</u> Does the code adhere to <u>CSS best practices</u> including:
   
   * Style is never defined inline; style sheets are contained in separate `.css` documents.
   
@@ -72,7 +74,7 @@ This assignment is graded on a 100 point scale. The following guide will be used
   
     
   
-* <u>xx/5 points:</u> Does the code adhere to <u>Javascript best practices</u> including: 
+* <u>xx/2.5 points:</u> Does the code adhere to <u>Javascript best practices</u> including: 
   
   * Uses Function expressions and Function Declarations appropriately; unless the javascript function need to be [hoisted](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting), it should be an expression, not a function.
   * Code is well commented, structured, and easy to follow
@@ -89,6 +91,7 @@ This assignment is graded on a 100 point scale. The following guide will be used
 <hr>
 
 **Please note that you will receive a 0 on the assignment if any of the following conditions are met:**
+
 
 
 * The assignment requirements were not met

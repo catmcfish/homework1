@@ -1,0 +1,118 @@
+.resume-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.institution {
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+}
+
+.institution-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 15px;
+}
+
+.institution-name {
+    font-size: 24px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.institution-info {
+    text-align: right;
+    color: #7f8c8d;
+}
+
+.position {
+    margin: 20px 0;
+}
+
+.position-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+}
+
+.position-title {
+    font-size: 20px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+.position-dates {
+    color: #7f8c8d;
+}
+
+.position-responsibilities {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.experience {
+    margin: 15px 0 15px 20px;
+}
+
+.experience-name {
+    font-size: 18px;
+    color: #3498db;
+    margin-bottom: 8px;
+}
+
+.experience-name a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.experience-name a:hover {
+    text-decoration: underline;
+}
+
+.experience-description {
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.skill {
+    background-color: #e8f4f8;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    color: #2980b9;
+}
+
+.skill-level {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+    .institution-header,
+    .position-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .institution-info,
+    .position-dates {
+        margin-top: 5px;
+    }
+
+    .skills {
+        margin-left: 10px;
+    }
+}

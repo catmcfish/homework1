@@ -1,0 +1,105 @@
+<!-- FILL ME IN WITH CODE FOR YOUR PAGE LAYOUT -->
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noah Gaw's personal page</title>
+  <link rel="stylesheet"    href="{{ url_for('static', filename='main/css/main.css') }}">
+  <link rel="stylesheet"    href="{{ url_for('static', filename='main/css/navbar.css') }}">
+  <link rel="stylesheet"    href="{{ url_for('static', filename='main/css/header.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='main/images/favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main/css/feedback.css') }}">
+  {% block extracss %}{% endblock %}
+  <script src="{{ url_for('static', filename='main/js/main.js') }}" defer></script>
+  {% block extrajs %}{% endblock %}
+</head>
+
+<body>
+    <article>
+    <!-- The header  -->
+    <header>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <img src="/static/main/images/banner.jpg" alt="Logo" class="header img" loading="lazy">  
+    </header>
+
+    <!-- The navigation bar -->
+    <nav> 
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <div class="navbar">
+          <img src="/static/main/images/menu-bar.png" alt="Logo" class="navbarMenuImg" id="menuImg" loading="lazy">
+          <span class="assignment-name">Homework 2</span>
+          <ul class="links a">
+              <li><a href="/" class="navbar a" id="link">Home</a></li>
+              <li><a href="https://www.linkedin.com/in/noahgaw/" id="link"><img src="/static/main/images/social-linkedin.png" class="navbar a" alt="LinkedIn" loading="lazy"></a></li>
+              <li><a href="/resume" class="navbar a" id="link">Resume</a></li>
+          </ul>
+      </div>
+      <div class="verticalNavbar" id="verticalNavbar">
+          <ul class="links a">
+              <li><a href="/" class="verticalNavbarLinkText" id="link">Home</a></li>
+              <li><a href="https://www.linkedin.com/in/noahgaw/" class="verticalNavbarLinkText" id="link">LinkedIn</a></li>
+              <li><a href="/resume" class="verticalNavbarLinkText" id="link">Resume</a></li>
+          </ul>
+      </div>
+  </nav>
+
+    <!-- Flash Messages -->
+    <div class="flash-messages">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash-message {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <!-- The main content  -->
+    <main>
+      {% block maincontent %}{% endblock %}
+    </main>
+
+    <!-- The footer of the file -->
+    <footer>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <p class="footer">©Noah Gaw</p>
+    </footer>
+
+    <!-- Feedback Buttons -->
+    <div class="feedback-buttons">
+      <button id="feedbackBtn" class="feedback-button">Give Feedback</button>
+      <a href="{{ url_for('view_feedback') }}" class="feedback-button view-feedback-button">View Feedback</a>
+    </div>
+
+    <!-- Feedback Form -->
+    <div id="feedbackForm" class="feedback-form">
+      <form action="/processfeedback" method="POST">
+        <h3>Provide Feedback</h3>
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="comment" placeholder="Your Comment" required></textarea>
+        <div class="form-buttons">
+          <button type="submit" class="submit-btn">Submit</button>
+          <button type="button" id="closeFeedback" class="close-btn">Close</button>
+        </div>
+      </form>
+    </div>
+    </article>
+  
+</body>
+<!-- Linking JavaScript file -->
+<script type="text/javascript" src="{{ url_for('static', filename='main/js/menuBar.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='main/js/feedback.js') }}"></script>
+</html>
+
+
+
+
+
+
+
+

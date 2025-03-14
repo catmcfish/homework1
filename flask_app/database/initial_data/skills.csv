@@ -1,0 +1,13 @@
+skill_id,experience_id,name,skill_level
+1,1,"Visual Paradigm",9
+2,1,"CLion",10
+3,1,"Python",9
+4,1,"HTML",9
+5,1,"CSS",9
+6,1,"JavaScript",10
+7,1,"Java",9
+8,1,"C++",10
+9,1,"Unix Development",10
+10,5,"Presentations",10
+11,5,"Team Leadership",10
+12,5,"Delegation",10

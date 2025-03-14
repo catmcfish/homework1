@@ -18,12 +18,12 @@
 }
 
 /* Center image with block display and auto margins, set size and background color */
-.imgCenter {
+.imgCenterM {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 30vw;
-    height: 30vh;
+    width: 20vw;
+    height: 35vh;
     top: 0;
     z-index: 1;
     background-color: #ffffff;
@@ -94,11 +94,55 @@
     }
 }
 
+/* Flash Messages */
+.flash-messages {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flash-message.error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.flash-message.warning {
+    background-color: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fde68a;
+}
+
+.flash-message.success {
+    background-color: #d1fae5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+}
+
 /* Media query for screens with max width of 650px */
 @media (max-width: 650px) {
     /* Row with horizontal direction and fixed width */
     .row {
         flex-direction: row;
         width: 80vw;
+    }
+
+    .flash-messages {
+        padding: 0 10px;
+    }
+    
+    .flash-message {
+        padding: 12px 15px;
+        font-size: 14px;
     }
 }

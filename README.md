@@ -1,20 +1,20 @@
-# [Web Application Development](https://gitlab.msu.edu/cse477-spring-2025/course-materials/): Homework 1
+# [Web Application Development](https://gitlab.msu.edu/cse477-spring-2025/course-materials/): Homework 2
 
 
 
 ## Purpose
 
-The purpose of this assignment is to provide with hands-on experience with frontend development including:
+The purpose of this assignment is to provide you with hands-on experience with backend development including:
 
-1. How to write and structure HTML documents.
-2. Best practices for styling reactive HTML documents using CSS.
-3. Building interactive client-side applications using HTML, CSS, and Javascript.
+1. [Python Flask](https://flask.palletsprojects.com/en/2.0.x/) - a backend for your web application.
+2. [MySQL](https://www.mysql.com/) - a relational database to store and retrieve data for your application.
+3.  [Jinja](https://jinja.palletsprojects.com/en/3.0.x/) - a tools for generating dynamic HTML content.
 
 
 
 ## Before you begin
 
-Before you begin this assignment, please complete the following steps.
+To help you grasp the overarching goal and requirements more concretely, [see the Homework overview video](https://youtu.be/VGlTVNcUJX4). Before you begin this assignment, please complete the following steps.
 
 
 
@@ -30,51 +30,111 @@ git pull https://gitlab.msu.edu/cse477-spring-2025/course-materials.git
 
 ##### 2. Compose the Homework container locally 
 
-1. Navigate to the `Homework-1` directory of your <u>Personal Course Repository</u> (that's the one with the same name as your netID). 
+1. Navigate to the `Homework-2` directory of your <u>Personal Course Repository</u> (that's the one with the same name as your netID). 
 
 2. Use `docker-compose` to host the web application locally by executing the following command from you terminal:
 
    ```bash
-   docker-compose -f docker-compose.yml -p hw1-container up
+   docker-compose -f docker-compose.yml -p hw2-container up
    ```
 
-3. Visit [http://0.0.0.0:8080/home.html](http://0.0.0.0:8080/home.html) to ensure the template is running.
+3. Visit [http://0.0.0.0:8080](http://0.0.0.0:8080) to ensure the template is running.
+
+3. Note that the Homework 2 [Dockerfile](Dockerfile-dev) will install and configure a MySQL 8.0 relational data on the container hosting your web application; you shouldn't need to configure the database.
 
 
 
 ##### 3. Explore the Template subdirectories
 
-In this assignment, you will modify the web application template provided in `Homework-1/flask-app/`. More specifically, you will author a number of `HTML`, `CSS`, and `Javascript` files that will fulfill the assignment criteria. All of your files for this assignment should be contained in:
+In this assignment, you will modify and extend the web application you developed in Homework 1.  As in Homework 1, we have provided a template app for this assignment in `Homework-2/flask-app/` that you can use to scaffold your assignment. Below we provide an overview of the important directories in this template, with specific call outs to some pre-populated files:
 
-* `/templates` : where you will store your `.html` files 
-* `/static` : where you will store your `.css`, `.js` and other files.
+* **`routes.py`**: contains a set of [routes](https://flask.palletsprojects.com/en/2.0.x/api/#flask.Flask.route) that map between specific URLs serviced by your web application (i.e. the location in each `@app.route(<location>)` decorator) to the particular function performed by your web application (i.e. function `def` under each `@app.route`). Some routes have been pre-populated to help you get started; we detail those below:
 
-As you explore these directories, you will notice some images, and template files you can will work with for the assignment; we'll call out these files in the assignment requirements, below.
+  * `@app.route('/')`: controls the behavior of the website when a user visits the root directory; in this case, we redirect the user to the `/home` route.
+
+  * `@app.route('/home')`:  renders my html template `home.html	` and passes in a randomly drawn fun fact.
+
+  * `@app.route('/resume')`: extracts `resume_data` from the database, and renders that data within the `resume.html` template.
+
+    
+
+* **`templates/`** : contains a set of `.html` *templates*; templates are distinguished from regular old html files because they can be dynamically populated using [Jinja](https://jinja.palletsprojects.com/en/3.0.x/) (that's the stuff that looks like this `{% ... %}`).  Some templates have been pre-populated to help you get started; we detail those below:
+
+  * `shared/layout.html`: contains an example template that can be extended by other pages in your web application using [Jinja's extends functionality](https://jinja.palletsprojects.com/en/stable/templates/#template-inheritance).
+  * `resume.html` and `home.html`: both extend `template.html`.
+
+  Given that this assignment extends Homework 1, we encourage you to copy over any relevant template files from the previous homework into this assignment directory. 
+
+  
+
+* **`static`** : contains a set of `.css`, `.js` and other static files that your webpage will serve; there is one subdirectory for each page on your website; given that this assignment extends Homework 1, we encourage you to copy over any relevant static files from the previous homework into this assignment directory. 
+
+  
+
+* **`database/create_tables`** : contains a set of `.sql` files; each file specifies a table in your application's database.  Some of the files have been pre-populated to help you get started; we detail those below:
+
+  * `institutions.sql`: contains the `CREATE TABLE` statement for the  `institutions` table which describes all the institutions you've been affiliated with.
+
+  * `positions.sql`: contains the `CREATE TABLE` statement for the `positions` table, which describes all the positions you've held at institutions in the `institutions` tables ; note that the `positions` table has a foreign key (`inst_id`) that references the `institutions` table's primary key. 
+
+    
+
+* **`database/initial_data`** : contains a set of `.csv` files; each file should contain the data used to initially populate a table in your application's database. Some of the files have been pre-populated to help you get started; we detail those below:
+
+  * `institutions.csv`: contains sample data that can be stored in the `institutions` table.
+  * `positions.csv`: contains sample data that can be stored in the `positions` table.
+
+  
+
+* **`utils/database/database.py`**:  contains a database python class that takes care of connecting to the database, running queries, and interfacing with Python. Some components of the database utility have already been pre-configured to help you get started; we detail those below:
+
+  * `def __init__`: contains the information needed to connect to the database including the `host`, `user`, `port` and `password`.
+
+  * `def query`:  connects to the database, and executes a query string. You can use the query method in Python by simply passing in a string of the SQL statement you want to execute in the database; for instance:
+
+    ````Python
+    from .utils.database.database  import database
+    db = database()
+    db.query("""SELECT CURDATE()""")
+    
+    >> [{'CURDATE()': datetime.date(2022, 2, 18)}]
+    ````
+
+    Alternatively, you can pass in a string with parameters; this is often useful when inserting into the database, especially when you need to use special characters in the insert statement; for instance:
+
+    ```python
+    from .utils.database.database  import database
+    db = database()
+    db.query("""SELECT * FROM skills where name=%s""", parameters=['HTML'])
+    
+    >> [{'skill_id': 3, 'experience_id': 2, 'name': 'HTML', 'skill_level': 9}]
+    ```
+
+  * `def about`: queries the [information_schema](https://dev.mysql.com/doc/refman/8.0/en/information-schema.html) and returns an overview of your database tables, columns, and keys. results can be returned nested or flat using the boolean `nested` parameter. You don't necessarily have to use this function for the assignment, but I included it in case it's helpful.
 
 
 
 ## Assignment Goals
 
-Your high-level goal in this assignment is to develop a mobile-friendly professional webpage with:
+Your high-level goal in this assignment is to extend your professional webpage from Homework 1 to include:
 
-1. **A Home page**: providing information about you, and your professional background. 
-2. **A Projects page**:  providing descriptions and links to functional web projects you are working on.
-3. **A Piano project:** providing a fully functional piano web application built in HTML CSS and Javascript (with a hidden twist.)  
+1. **A Database**:  allowing you to store persistent information used by your web application.
+1. **A Resume page**: providing a HTML version of your Resume (rather than a .pdf). 
+2. **A Feedback form**:  Allowing visitors to provide feedback anywhere on your web application.
 
-Your implementation should satisfy both the General Requirements, and Specific Requirements detailed in the sections below;  to help you grasp the overarching goal and requirements more concretely, [see the Homework overview video](https://youtu.be/RxyNQgcdNiY). Please note; your implementation does not have to look identical to the example solution. As long as you achieve the Specific and General requirement below, your assignment is complete.
+Your implementation should satisfy both the General Requirements, and Specific Requirements detailed in the sections below. Please note; your implementation does not have to look identical to the example solution. As long as you achieve the Specific and General requirement below, your assignment is complete.
 
 
 
 ## General Requirements
 
-As a general requirement, we would like you to following good programming practice, this includes (but is not limited to):
+As a general requirement, we would like you to follow good programming practice, this includes (but is not limited to):
 
 * All code should be commented, organized, and thoughtfully structured.
-* `HTML` content should be placed in the `flask_app/templates/` directory.
-* `CSS`, `Javascript`, `Images`, `Documents` and other content should be placed in the `flask_app/static` directory.
 * Don't mix `HTML`, `CSS`, and `Javascript` in single files.
+* `SQL` tables should use foreign keys when appropriate, and contain comments at both the row, and the table level.
 
-Please see the General Requirements section of the [assignment rubric](documentation/rubric.md) for other elements of good programming practice in HTML, CSS and Javascript that we'd like you you to pay attention to.
+Please see the General Requirements section of the [assignment rubric](documentation/rubric.md) for other elements of good programming practice that we'd like you you to pay attention to.
 
 
 
@@ -84,98 +144,204 @@ For each of the three assignment goals listed above, we provide a section that o
 
 
 
-##### Home page requirements
+#### 1. Database requirements
 
-We've provided a placeholder home page for your application called [`home.html`](flask_app/templates/home.html); You will need to add a [`<header>`]([](https://www.w3schools.com/tags/tag_header.asp))  [`<nav>`](https://www.w3schools.com/tags/tag_nav.asp)  [`<main>`](https://www.w3schools.com/tags/tag_main.asp) and  [`<footer>`](https://www.w3schools.com/tags/tag_footer.asp) section to this template. Each HTML sections should satisfy the *Structure*, *Content*, *Style*, and *Interactivity* requirements outlined in the table below. Any `CSS` and `Javascript` should be imported separately, not included in your HTML file. 
+For this portion of the assignment, you will specify a database that allows you to store information used by your web application. This will involve three tasks:  
 
-|                          | [`<header>`]([](https://www.w3schools.com/tags/tag_header.asp)) | [`<nav>`](https://www.w3schools.com/tags/tag_nav.asp)        | [`<main>`](https://www.w3schools.com/tags/tag_main.asp)      | [`<footer>`](https://www.w3schools.com/tags/tag_footer.asp)  |
-| ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Structure**            | -  always appears at the top of the page                     | - appears beneath the `<header>`                             | - appears beneath the`<nav>`                                 | - always at the bottom of the page.                          |
-| **Content**              | - a banner image (e.g. [this one](flask_app/static/main/images/banner.jpg)) | - Name of the assignment<br /><br />- Link to the `home.html` page <br /><br />- Link to the `projects.html` page <br /><br />- Link to your resume.<br />- Link to your LinkedIn page (embedded in [an icon](flask_app/static/main/images/social-linkedin.png)) <br /> | - your name<br /><br />- photo of you<br /><br />- brief description of you<br /><br />- fun fact about you | - the copyright symbol © , followed by your name             |
-| **Style**                | - banner images should cover the entire header area; i.e. no [margin](https://www.w3schools.com/css/css_margin.asp) and no [padding](https://www.w3schools.com/css/css_padding.asp)<br />- banner size should scale with screen [viewing height](https://www.w3schools.com/cssref/css_units.asp) and [viewing width](https://www.w3schools.com/cssref/css_units.asp) | - name of the assignment should be on the left of the nav bar<br /><br /> - All links should appear on the right of the nav<br /><br />- The [opacity](https://www.w3schools.com/css/css_image_transparency.asp) of the links should change on [hover](https://www.w3schools.com/cssref/sel_hover.asp).<br /><br />- navbar size should scale with screen [viewing height](https://www.w3schools.com/cssref/css_units.asp) and [viewing width](https://www.w3schools.com/cssref/css_units.asp) | - all text should be centered and [justified](https://www.w3schools.com/cssref/css3_pr_text-justify.asp)<br /><br />- the name, photo and breif description should appear  in a row of content with two equal sized columns. The row should have a maximum [viewing height](https://www.w3schools.com/cssref/css_units.asp) of 50vh, and [viewing width](https://www.w3schools.com/cssref/css_units.asp) of 80vw.<br /><br />- the photo should cover the entire area of the left column; the name and description should appear on the right column; [text overflow](https://www.w3schools.com/cssref/css3_pr_overflow-y.asp) should be handled with the scroll bar.<br /><br />- the fun fact should appear in seperate line of content.<br /> | - should have a color that is distinct from the color of `<main>`.<br /><br />- all text should be centered and justified. |
-| **Mobile Interactivity** | - None required                                              | - the nav links should disappear when the screen size is less than `650px`, and be replaced with a [menu bar](flask_app/static/main/images/menu-bar.png) that, when clicked, displays the links.<br /><br />- the LinkedIn Icon should be replaced with text that says "LinkedIn" | - any two column content should transition into single column content when the screen size less than `650px`; [text overflow](https://www.w3schools.com/cssref/css3_pr_overflow-y.asp) should be `visible`; all single column content should have a viewing width of 80vw. | - None required                                              |
+1. **Specify several database tables** by adding `.sql` files to `database/create_tables` folder; more specifically you will create:
+
+   * **`experiences.sql`**: contains the `CREATE TABLE` statement for the `experiences` table, which describes all the experiences you had at each position in the `positions` table ; the table should contain the following columns:
+
+     * `experience_id`: the primary key, and unique identifier for each experience
+     * `position_id`: a foreign key that references  `positions.position_id` 
+     * `name`: the name of the experience.
+     * `description`: a description of the experience.
+     * `hyperlink`: a link where people can learn more about the experience.
+     * `start_date`: the state date of the experience.
+     * `end_date`: the end date of the experience.
+
+   * **`skills.sql`**: contains the `CREATE TABLE` statement for the `skills` table, which describes all skills associated with each of the experiences in the `experiences` table ; the table should contain the following columns:
+
+     * `skill_id`:  the primary key, and unique identifier for each skill
+     * `experience_id`: a foreign key that references  `experiences.experience_id` 
+     * `name`: the name of the skill
+     * `skill_level`: the level of the skill; 1 being worst, 10 being best.
+
+   * **`feedback.sql`**: contains the `CREATE TABLE` statement for the `feedback` table, which contains user feedback about your website; the table should contain the following columns:
+
+     * `comment_id`: the primary key, and unique identifier for each comment.
+
+     * `name`: the commentators name
+
+     * `email`:  the commentators email
+
+     * `comment`:  The text of the comment
+
+       
+
+2. **Specify the initial data that will populate your tables** by adding `.csv` files to `database/initial_data`; more specifically, you will create (or update):
+
+   1. **`institutions.csv`**: contains data that will be ported into the `institutions` table on initialization of the app.
+
+   2. **`positions.csv`**: contains data that will be ported into the `positions` table on initialization of the app.
+
+   3. **`experiences.csv`**: contains data that will be ported into the `experiences` table on initialization of the app.
+
+   4. **`skills.csv`**:  contains data that will be ported into the `skills` table on initialization of the app.
+
+      
+
+3. **Extend the [database utility](flask_app/utils/database/database.py)** by adding functions that create tables, insert data, and fetch resume data; more specifically, you will populate the following empty function in the database utility:
+
+   1. **`createTables()`**: should create all tables in your database by executing each of the  `.sql` files in `database/create_tables`, and populating them with the initial data provided in `database/initial_data`. Note that `createTables()` is called in `__init__.py` and will therefore be executed upon creation of your application.
+
+   2. **`insertRows()`**: should insert rows into a given table; more specifically, the function should take the table name, a list of column names, and a list of parameter lists (i.e. a list of lists) and execute the appropriate `INSERT` query.
+
+   3. **`getResumeData()`**: should return a nested `dict` that hierarchically represents the complete data  contained in the `institutions`, `positions`, `experiences`, and `skills` tables. Tables should be nested according to their foreign key dependencies. Here's an example of what the the returned data should look like:
+
+      ```json
+      {1: {'address': 'NULL',
+              'city': 'East Lansing',      
+             'state': 'Michigan',
+              'type': 'Academia',
+               'zip': 'NULL',
+        'department': 'Computer Science',
+              'name': 'Michigan State University',
+         'positions': {1: {'end_date'        : None,
+                           'responsibilities': 'Teach classes; mostly NLP and Web design.',
+                           'start_date'      : datetime.date(2020, 1, 1),
+                           'title'           : 'Instructor',
+                           'experiences': {1: {'description' : 'Taught an introductory course ... ',
+                                                  'end_date' : None,
+                                                 'hyperlink' : 'https://gitlab.msu.edu',
+                                                      'name' : 'CSE 477',
+                                                    'skills' : {},
+                                                'start_date' : None
+                                              },
+                                           2: {'description' : 'introduction to NLP ...',
+                                                  'end_date' : None,
+                                                  'hyperlink': 'NULL',
+                                                  'name'     : 'CSE 847',
+                                                  'skills': {1: {'name'        : 'Javascript',
+                                                                 'skill_level' : 7},
+                                                             2: {'name'        : 'Python',
+                                                                 'skill_level' : 10},
+                                                             3: {'name'        : 'HTML',
+                                                                 'skill_level' : 9},
+                                                             4: {'name'        : 'CSS',
+                                                                 'skill_level' : 5}},
+                                                  'start_date': None
+                                              }
+                                          }
+                          }
+                      }
+          }
+      }
+      ```
+
+      
+
+#### 2. Resume page requirements
+
+For this portion of the assignment, you will write code that generates a dynamic HTML version of your Resume. This will involve two tasks:  
+
+1. **Complete the `resume.html` template** by adding html and jinja statements that dynamically transform the data returned by `getResumeData()` into a dynamic, and <u>mobile friendly</u> resume page; more specifically, your resume page should:
+   * <u>For each institution</u>, display:
+     * `name` of the institution; this should be left justified.
+     * location information for the institution (`department`,`address`, `city` etc.); this should be right justified. 
+     * <u>For each affiliated position,</u> display:
+       * `title`; this should be left justified
+       * `start_date` and `end_date`; this should be right justified.
+       * `responsibilities` of the position.
+       * <u>For each affiliated experience,</u> display: 
+         * `name` of the experience; this should be a hyperlink if the `hyperlink` field is not NULL.
+         * `description` of the experience
+         * <u>For each affiliated skill, display</u>:
+           * `name` of the skill. 
+2. **Be mindful of your styling**; while I have not specified specific constraints on the styling here, the content should:
+* Look good on both mobile and desktop screens.
+  
+* Only display a field if it is not `"NULL"` or `None`
+  
+* Denote the hierarchical relationships in the source data using font-sizes, colors, bullets, etc.
 
 
 
-##### Projects page requirements
+#### 3. Feedback form requirements
 
-We've provided a placeholder projects page for your application called [`projects.html`](flask_app/templates/projects.html);  it will use the same *Structure*, *Style*, and *Interactivity* conventions as the Home page. The only section that will differ between the Projects page and the Home page is the *Content* in `<main>`. The *Content* requirements include:
+For this portion of the assignment, you will generate a feedback form that allows users to send feedback on your site from anywhere in your web application; this will involve three  tasks:
 
-* A single column row of content explaining the purpose of the page (i.e. to show off your project work).
+1. **Add an html feedback form** to the `layout.html` template (along with any supporting CSS and JavaScript). The form should contain:
 
-* A two-column row of content that shows an [image of a piano](flask_app/static/main/images/piano.jpeg) on the left; and a description of the piano project on the right, with a link to `piano.html`
-* clicking the image of the piano should take you to the `piano.html` page.
+   *  `action` attribute that sends the data to the `/processfeedback` route in `routes.py`.
+   *  `method`, and `enctype` attributes that specify a [POST request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST).
+   * The form should contain four `<input>` elements:
+     * `name`: a text field that captures the name.
+     * `email`: a text field that captures the email.
+     * `comment`:  a text field that captures the comment.
+     * `submit`: a button that submits the form.
+   * The form should be styled such that:
+     * the `position` of the form centers it in the screen, even as a user scrolls up or down.
+     * the `display` of the form makes it initially invisible.
 
+2. **Add a button that toggles the visibility of the feedback form** to the `layout.html` template. More specifically;
 
+   * When the button is pressed the form should become visible.
 
-**Piano project requirements**
+   * The button to toggle the feedback form should show up on every page of your application and should always be visible.
 
-We've provided a placeholder page for your piano application called [`piano.html`](flask_app/templates/piano.html);  it should use the same *Structure*, *Style*, and *Interactivity* conventions as the Home page. Within  `<main>`, you will place:
+3. **Process and store the feedback:**
 
-* <u>In HTML:</u> At the top of the page should be the following poem: ""*Behold piano great and old, it's master slumbers in far off cold, If you wish to see anew, call out to it - we see you.*""
-* <u>In HTML and CSS:</u> Under the poem will be your piano. It should have 10 white keys, 7 black keys, and the name "The Great Old One". The piano can be constructed by [layering HTML elements](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Adding_z-index). For instance, you can make each key in the piano a separate `<div>` with an appropriate size, ID, etc. It should look something like this at the end:
+   * In `routes.py`,  add a route and function to handle the feedback data submitted by the users. Within the route, access the submitted data via `request.form`. It should look something like this:
 
-![piano-1](documentation/piano-1.png)
+     ```python
+     @app.route('/processfeedback', methods = ['POST'])
+     def processfeedback():
+     	feedback = request.form
+     ```
 
-* <u>In Javascript:</u>  Create [a mouseover event listener](https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event) to detect when the mouse hovers over any key of the piano, and temporarily reveal the keyboard keys that control the piano; it should look something like this when your mouse is hovered over any of the keys:
+   * within the `/processfeedback` route, add code that:
 
-![piano-2](documentation/piano-2.png)
+     * Inserts the form data into the `feedback` table within the database.
 
-* <u>In Javascript:</u> Create a [keydown event listener](https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event) to detect when a given key is pressed (e.g. the S key), and alter the style of the corresponding HTML element that represents that key to indicate it was pressed. If the S key were pressed, for instance, you should temporarily see something like the image below. I suggest looking into the [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) and [box-shadow](https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow) in CSS if you want to replicate the effect in my example, but you can choose to style it another way too; for instance, by temporarily changing the key's [background color](https://www.w3schools.com/cssref/pr_background-color.asp), or changing the key's size. 
+     * Extract all feedback from the `feedback` table
+     * Render a template `processfeedback.html` that transform the feedback data into a dynamic, and <u>mobile friendly</u> feedback page; 
 
-![piano-2](documentation/piano-3.png)
+     
 
-* <u>In Javascript:</u> Use the [keyCode](https://keycode.info/) from keypress events captured by the keydown event listener to identify which key was pressed. Next, use the following [JSON object](https://www.w3schools.com/whatis/whatis_json.asp) to map the keyCode to a url containing the sound of the note you need to play. You can play these notes by passing the corresponding url to an [Audio() constructor](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio) in Javascript:
+#### 4. OPTIONAL: Create a Favicon for your website
 
-```json
-const sound = {65:"http://carolinegabriel.com/demo/js-keyboard/sounds/040.wav",
-                87:"http://carolinegabriel.com/demo/js-keyboard/sounds/041.wav",
-                83:"http://carolinegabriel.com/demo/js-keyboard/sounds/042.wav",
-                69:"http://carolinegabriel.com/demo/js-keyboard/sounds/043.wav",
-                68:"http://carolinegabriel.com/demo/js-keyboard/sounds/044.wav",
-                70:"http://carolinegabriel.com/demo/js-keyboard/sounds/045.wav",
-                84:"http://carolinegabriel.com/demo/js-keyboard/sounds/046.wav",
-                71:"http://carolinegabriel.com/demo/js-keyboard/sounds/047.wav",
-                89:"http://carolinegabriel.com/demo/js-keyboard/sounds/048.wav",
-                72:"http://carolinegabriel.com/demo/js-keyboard/sounds/049.wav",
-                85:"http://carolinegabriel.com/demo/js-keyboard/sounds/050.wav",
-                74:"http://carolinegabriel.com/demo/js-keyboard/sounds/051.wav",
-                75:"http://carolinegabriel.com/demo/js-keyboard/sounds/052.wav",
-                79:"http://carolinegabriel.com/demo/js-keyboard/sounds/053.wav",
-                76:"http://carolinegabriel.com/demo/js-keyboard/sounds/054.wav",
-                80:"http://carolinegabriel.com/demo/js-keyboard/sounds/055.wav",
-                186:"http://carolinegabriel.com/demo/js-keyboard/sounds/056.wav"};
+Visit [this website](https://favicon.io/logo-generator/) to quickly generate a favicon for your site. Add this line to your HTML head; note that the value of the `href` attribute should be the location of the favicon, which may differ from what I'm showing below.
+
+```HTML
+<link rel="shortcut icon" href="static/main/images/favicon.ico">
 ```
-
-* <u>In Javascript:</u> When the sequence of keys "weseeyou" is typed on your piano it should awaken the great old one! More specifically, (1) your piano should gradually fade away and be replaced by the [image of the great old one](flask_app/static/piano/images/texture.jpeg), (2) you should play the following [creepy audio](https://orangefreesounds.com/wp-content/uploads/2020/09/Creepy-piano-sound-effect.mp3?_=1) and (3) the piano should no longer respond to key presses; at the end, the piano should look something like this:
-
-![piano-4](documentation/piano-4.png)
 
 
 
 ## Submitting your assignment
 
-##### Submit Homework 1 Code
+##### Submit Homework 2 Code
 
 1. Submit your assignment by navigating to the main directory of your <u>Personal Course Repository</u> and Pushing your repo to Gitlab; you can do this by running the following commands:
 
    ```bash
    git add .
-   git commit -m 'submitting Homework 1'
+   git commit -m 'submitting Homework 2'
    git push
    ```
 
-2. You have now submitted Homework 1's code; you can run the same commands to re-submit anytime before the deadline. Please check that your submission was successfully uploaded by navigating to the corresponding directory in Personal Course Repository online.
+2. You have now submitted Homework 2's code; you can run the same commands to re-submit anytime before the deadline. Please check that your submission was successfully uploaded by navigating to the corresponding directory in Personal Course Repository online.
 
 
 
 **Deploy your web application to Google Cloud**
 
-Deploy your Dockerized App to Google Cloud by running the commands below from the Homework-1 directory.
+Deploy your Dockerized App to Google Cloud by running the commands below from the Homework-2 directory.
 
 ```bash
-gcloud builds submit --tag gcr.io/cse477-spring-2025/homework
-gcloud run deploy --image gcr.io/cse477-spring-2025/homework --platform managed
+gcloud builds submit --tag gcr.io/cse477-spring-2025/homework2
+gcloud run deploy --image gcr.io/cse477-spring-2025/homework2 --platform managed
 ```
 
 * When prompted for service name, press enter.
@@ -199,9 +365,9 @@ Service URL: https://homework-z7tywrhkpa-uc.a.run.app
 
 
 
-##### Submit Homework 1 Survey:
+##### Submit Homework 2 Survey:
 
-[Submit the Service URL for your live web application in this Google Form](https://docs.google.com/forms/d/e/1FAIpQLSdq2CA5OUqG4MUA1koEVpxA9dq7TEHtfxxQcBDB5f0Pa9cEpQ/viewform 
+[Submit the Service URL for your live web application in this Google Form](https://docs.google.com/forms/d/e/1FAIpQLSdDfIrMLD7QmlO8BhXGbzfzsml4WkQyBPsuMrYnQ9ljzWEKUg/viewform 
 
 
 

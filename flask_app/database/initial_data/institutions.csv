@@ -1,0 +1,6 @@
+"inst_id","type","name","department","address","city","state","zip"
+"5","Industry","North Star Sailing Club","Instruction",NULL,"Harrison Township","Michigan","48038"
+"4","Industry","Home Depot","Lumber Department",NULL,"Detroit","Michigan",NULL
+"3","Industry","Modern Landscaping","Maintenance",NULL,"Detroit","Michigan",NULL
+"2","Industry","Fern Hill","Golf Services",NULL,"Clinton Township","Michigan",NULL
+"1","Industry","S.G. Art Studio","Web Development",NULL,"Detroit","Michigan",NULL

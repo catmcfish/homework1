@@ -1,0 +1,6 @@
+experience_id,position_id,name,description,hyperlink,start_date,end_date
+1,1,"Web Development","Learned about various web development frameworks and technologies",NULL,"2021-06-01","2025-03-13"
+2,2,"Golf Club Assistant","Assisted in managing the golf club","https://www.fernhillgc.com/","2021-05-01","2022-08-01"
+3,3,"Landscaping","Worked with several skilled foremen.",NULL,"2021-05-01","2021-8-31"
+4,4,"Warehouse Work","Assisted in managing the warehouse","https:://www.homedepot.com","2019-05-01","2020-08-23"
+5,5,"Sailing Education Program","Developed and delivered comprehensive sailing curriculum","https://www.northstarsail.org/junior_sailing.php","2024-06-01","2024-08-15"

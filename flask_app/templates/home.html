@@ -1,78 +1,25 @@
-<!-- Linking CSS files -->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main/css/header.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main/css/main.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main/css/navbar.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main/css/footer.css') }}">
+{% extends 'shared/layout.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Page Title -->
-<title>
-    Noah Gaw
-</title>
-
-<!-- Header Section -->
-<header>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <img src="/static/main/images/banner.jpg" alt="Logo" class="header img" loading="lazy">  
-</header>
-
-<!-- Navigation Bar -->
-<nav> 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="navbar">
-        <img src="/static/main/images/menu-bar.png" alt="Logo" class="navbarMenuImg" id="menuImg" loading="lazy">
-        <span class="assignment-name">Homework 1</span>
-        <ul class="links a">
-            <li><a href="/home.html" class="navbar a" id="link">Home</a></li>
-            <li><a href="/projects.html" class="navbar a" id="link">Projects</a></li>
-            <li><a href="https://www.linkedin.com/in/noahgaw/" id="link"><img src="/static/main/images/social-linkedin.png" class="navbar a" alt="LinkedIn" loading="lazy"></a></li>
-            <li><a href="/static/main/images/NoahGaw_Resume.pdf" class="navbar a" id="link">Resume</a></li>
-        </ul>
-    </div>
-    <div class="verticalNavbar" id="verticalNavbar">
-        <ul class="links a">
-            <li><a href="/home.html" class="verticalNavbarLinkText" id="link">Home</a></li>
-            <li><a href="/projects.html" class="verticalNavbarLinkText" id="link">Projects</a></li>
-            <li><a href="https://www.linkedin.com/in/noahgaw/" class="verticalNavbarLinkText" id="link">LinkedIn</a></li>
-            <li><a href="/static/main/images/NoahGaw_Resume.pdf" class="verticalNavbarLinkText" id="link">Resume</a></li>
-        </ul>
-    </div>
-</nav>
-
+{% block maincontent %}
 <!-- Main Content -->
-<main>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="row">
-        <div class="leftColumn">
-            <img src="/static/main/images/noahphoto.jpg" alt="Noah's Photo" class="imgCenter" loading="lazy">
-        </div>
-        <div class="rightColumn">
-            <p class="textCenter">Noah Gaw</p>
-            <p class="textCenter">Computer Science Student</p>
-            <p class="textCenter">I am a computer science student at Michigan State University, I'm from the metro detroit area and I can't
-                wait to graduate and start working in the field!
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <p class="textCenterPost">Fun fact: the dog you see in the picture above is older than my car(was), and that car was from 2011!
-             P.S. the dog is doing great, he's too big to think he's a puppy still.
-        </p>
-    </div>
-</main>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <div class="row">
+      <div class="leftColumn">
+          <img src="/static/main/images/noahphoto.jpg" alt="Noah's Photo" class="imgCenterM" loading="lazy">
+      </div>
+      <div class="rightColumn">
+          <p class="textCenter">Noah Gaw</p>
+          <p class="textCenter">Computer Science Student</p>
+          <p class="textCenter">I am a computer science student at Michigan State University, I'm from the metro detroit area and I can't
+              wait to graduate and start working in the field!
+          </p>
+      </div>
+  </div>
+<!-- Another block of content -->
+<hr>
 
-<!-- Footer Section -->
-<footer>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <p class="footer">©Noah Gaw</p>
-</footer>
+<p>A fun fact about me: <b>{{fun_fact}}</b> </p>
+{% endblock %}
 
-<!-- Linking JavaScript file -->
-<script type="text/javascript" src="{{ url_for('static', filename='main/js/menuBar.js') }}"></script>
-</html>
+

@@ -1,0 +1,79 @@
+{% extends 'shared/layout.html' %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='main/css/resume.css') }}">
+{% endblock %}
+
+{% block maincontent %}
+<div class="resume-container">
+    {% for inst_id, institution in resume_data.items() %}
+    <div class="institution">
+        <div class="institution-header">
+            <div class="institution-name">{{ institution.name }}</div>
+            <div class="institution-info">
+                {% if institution.department != 'NULL' %}
+                    {{ institution.department }}<br>
+                {% endif %}
+                {% if institution.address != 'NULL' %}
+                    {{ institution.address }}<br>
+                {% endif %}
+                {% if institution.city != 'NULL' or institution.state != 'NULL' %}
+                    {{ institution.city }}, {{ institution.state }}
+                    {% if institution.zip != 'NULL' %}
+                        {{ institution.zip }}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        {% for pos_id, position in institution.positions.items() %}
+        <div class="position">
+            <div class="position-header">
+                <div class="position-title">{{ position.title }}</div>
+                <div class="position-dates">
+                    {% if position.start_date %}
+                        {{ position.start_date.strftime('%B %Y') }}
+                    {% endif %}
+                    -
+                    {% if position.end_date %}
+                        {{ position.end_date.strftime('%B %Y') }}
+                    {% else %}
+                        Present
+                    {% endif %}
+                </div>
+            </div>
+            {% if position.responsibilities != 'NULL' %}
+                <div class="position-responsibilities">{{ position.responsibilities }}</div>
+            {% endif %}
+
+            {% for exp_id, experience in position.experiences.items() %}
+            <div class="experience">
+                <div class="experience-name">
+                    {% if experience.hyperlink and experience.hyperlink != 'NULL' %}
+                        <a href="{{ experience.hyperlink }}" target="_blank">{{ experience.name }}</a>
+                    {% else %}
+                        {{ experience.name }}
+                    {% endif %}
+                </div>
+                {% if experience.description != 'NULL' %}
+                    <div class="experience-description">{{ experience.description }}</div>
+                {% endif %}
+
+                {% if experience.skills %}
+                <div class="skills">
+                    {% for skill_id, skill in experience.skills.items() %}
+                    <div class="skill">
+                        {{ skill.name }}
+                        <span class="skill-level">({{ skill.skill_level }}/10)</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
